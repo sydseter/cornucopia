@@ -75,15 +75,7 @@ jobs:
 
   # If Tests pass, generate new output files and commit to repo
   uploadoutputfiles:
-    # This doesn't work since the commit has to be signed.
-    # TODO: We need to create a bot that can update the output files and
-    # create a pull-request with the necessary changes
-    # or that commits directly to the pull-requests.
-    # Remove the if below if you still want to experiment with this job.
-    if: true
-    permissions:
-      contents: write  # for Git to git push
-    name: Update Output Files
+    name: Upload Output Files
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -134,7 +126,7 @@ jobs:
       - name: Generate new output files
         run: |
           pipenv run python scripts/convert.py -l all -t all -s all
-      - uses: actions/upload-artifact@5d5d22a
+      - uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3
         id: artifact-upload-step
         with:
           name: generated-files
