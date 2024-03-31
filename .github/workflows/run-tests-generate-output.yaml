@@ -33,6 +33,7 @@ jobs:
             packages.microsoft.com:443
             ppa.launchpadcontent.net:443
             pypi.org:443
+            opencre.org:443
       - name: Checkout repository
         uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
       # Set the pip environment up
