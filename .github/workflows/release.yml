@@ -11,7 +11,6 @@
         permissions:
           contents: write
         runs-on: "ubuntu-latest"
-        if: github.ref == 'refs/heads/master'
         steps:
           # Make sure we have some code to test
           - name: Harden Runner
