@@ -93,16 +93,19 @@ google-account:
 
 .PHONY: release
 release:
-	@rm .version.properties
-	git tag -d pre-release
+	@rm -f .version.properties
+	git tag -d pre-release 2> /dev/null || echo ok
+	git checkout master
+	git fetch --all
+	git pull origin master
 	./version-up.sh --patch -r --prefix v --apply
 	git add version.properties
 	# To release a new version:
 	# git push origin --tag <name of tag>
 .PHONY: release-patch
 release-patch:
-	@rm .version.properties
-	git tag -d pre-release
+	@rm -f .version.properties && echo ok
+	git tag -d pre-release 2> /dev/null || echo ok
 	git checkout master
 	git fetch --all
 	git pull origin master
@@ -112,8 +115,8 @@ release-patch:
 	# git push origin --tag <name of tag>
 .PHONY: release-minor-update
 release-minor-update:
-	@rm .version.properties
-	git tag -d pre-release
+	@rm -f .version.properties
+	git tag -d pre-release 2> /dev/null || echo ok
 	git checkout master
 	git fetch --all
 	git pull origin master
@@ -123,8 +126,8 @@ release-minor-update:
 	# git push origin --tag <name of tag>
 .PHONY: release-major-update
 release-major-update:
-	@rm .version.properties
-	git tag -d pre-release
+	@rm -f .version.properties
+	git tag -d pre-release 2> /dev/null || echo ok
 	git checkout master
 	git fetch --all
 	git pull origin master
