@@ -100,7 +100,6 @@ release:
 	git pull origin master
 	./version-up.sh --patch -r --prefix v --apply
 	@rm -f .version.properties
-	git add version.properties
 	# To release a new version:
 	# git push origin --tag <name of tag>
 .PHONY: release-patch
