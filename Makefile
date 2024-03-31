@@ -22,8 +22,8 @@ PYTHON_COVERAGE_MIN = 85 # %
 shfmt shellcheck pipenv:
 	@docker build \
 		--tag $@ \
-		--build-arg "user_id=$(shell id -u)" \
-		--build-arg "group_id=$(shell id -g)" \
+		--build-arg "user_id=1000" \
+		--build-arg "group_id=1000" \
 		--build-arg "home=${HOME}" \
 		--build-arg "workdir=${PWD}" \
 		--target $@ . \
