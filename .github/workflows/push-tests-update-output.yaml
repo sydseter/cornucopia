@@ -141,7 +141,6 @@ jobs:
             output/owasp_cornucopia_ecommerce_cards_es_1.20_dynamic.idml
             output/owasp_cornucopia_ecommerce_cards_es_1.20_static.docx
             output/owasp_cornucopia_ecommerce_cards_es_1.20_static.idml
-            output/owasp_cornucopia_ecommerce_cards_es_1.20_static.pdf
             output/owasp_cornucopia_ecommerce_cards_fr_1.20_dynamic.docx
             output/owasp_cornucopia_ecommerce_cards_fr_1.20_dynamic.idml
             output/owasp_cornucopia_ecommerce_cards_fr_1.20_static.docx
