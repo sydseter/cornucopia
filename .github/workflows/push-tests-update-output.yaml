@@ -131,9 +131,9 @@ jobs:
       - name: Output artifact ID
         run: |
           echo 'Artifact URL is ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.artifact-upload-step.outputs.artifact-id }}'
+          echo "ARTIFACT_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.artifact-upload-step.outputs.artifact-id }}" >> $GITHUB_ENV
       - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea
         env:
-          ARTIFACT_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.artifact-upload-step.outputs.artifact-id }}
           PR_NUMBER: ${{ github.event.number }}
           PR_NOTES: |
             Build artifacts:
