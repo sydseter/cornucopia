@@ -24,7 +24,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 permissions:
   contents: read
-
+  pull-requests: write
 jobs:
   runtests:
     name: Run Tests
@@ -125,6 +125,7 @@ jobs:
         with:
           name: owasp_cornucopia_ecommerce_cards_en_1.21_dynamic.docx
           path: output/owasp_cornucopia_ecommerce_cards_en_1.21_dynamic.docx
+          compression-level: 0
           retention-days: 1
           overwrite: true
       - name: Output artifact ID
