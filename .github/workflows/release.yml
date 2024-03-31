@@ -8,6 +8,8 @@
     jobs:
       tagged-release:
         name: "Tagged Release"
+        permissions:
+          contents: write
         runs-on: "ubuntu-latest"
         if: github.ref == 'refs/heads/master'
         steps:
@@ -55,6 +57,7 @@
             run: |
               pipenv run python scripts/convert.py -l all -t all -s all
           - uses: marvinpinto/action-automatic-releases@919008cf3f741b179569b7a6fb4d8860689ab7f0 # v1.2.1
+            name: "Create release"
             with:
               repo_token: "${{ secrets.GITHUB_TOKEN }}"
               prerelease: false
