@@ -7,6 +7,8 @@
     jobs:
       pre-release:
         name: "Pre Release"
+        permissions:
+          contents: write
         runs-on: ubuntu-latest
         steps:
           # Make sure we have some code to test
@@ -58,9 +60,10 @@
             run: |
               pipenv run python scripts/convert.py -l all -t all -s all
           - uses: marvinpinto/action-automatic-releases@919008cf3f741b179569b7a6fb4d8860689ab7f0 # v1.2.1
+            name: "Create pre-release"
             with:
               repo_token: "${{ secrets.GITHUB_TOKEN }}"
-              automatic_release_tag: "latest"
+              automatic_release_tag: "pre-release"
               prerelease: true
               title: "Latest pre-release"
               files: |
