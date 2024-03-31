@@ -99,17 +99,19 @@ release:
 	git fetch --all
 	git pull origin master
 	./version-up.sh --patch -r --prefix v --apply
+	@rm -f .version.properties
 	git add version.properties
 	# To release a new version:
 	# git push origin --tag <name of tag>
 .PHONY: release-patch
 release-patch:
-	@rm -f .version.properties && echo ok
+	@rm -f .version.properties
 	git tag -d pre-release 2> /dev/null || echo ok
 	git checkout master
 	git fetch --all
 	git pull origin master
 	./version-up.sh --patch -r --prefix v --apply
+	@rm -f .version.properties
 	#
 	# To release a new version:
 	# git push origin --tag <name of tag>
@@ -121,6 +123,7 @@ release-minor-update:
 	git fetch --all
 	git pull origin master
 	./version-up.sh --minor -r --prefix v --apply
+	@rm -f .version.properties
 	#
 	# To release a new version:
 	# git push origin --tag <name of tag>
@@ -132,6 +135,7 @@ release-major-update:
 	git fetch --all
 	git pull origin master
 	./version-up.sh --major -r --prefix v --apply
+	@rm -f .version.properties
 	# 
 	# To release a new version:
 	# git push origin --tag <name of tag>
