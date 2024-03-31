@@ -23,7 +23,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
 jobs:
   runtests:
@@ -120,6 +120,72 @@ jobs:
         run: |
           echo "skip for now"
           # pipenv run python scripts/convert.py -l all -t all -s all
+      - name: Pull request artifacts
+        uses: gavv/pull-request-artifacts@93f32f061d1fabdb41104db2493f2260c7db774f # v2.1
+        with:
+          commit: ${{ github.event.pull_request.head.sha }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          comment-message: "The generated Cornucopia cards in this pull request."
+          artifacts: |
+            output/owasp_cornucopia_ecommerce_cards_en_1.21_dynamic.docx
+            output/owasp_cornucopia_ecommerce_cards_en_1.21_dynamic.idml
+            output/owasp_cornucopia_ecommerce_cards_en_1.21_static.docx
+            output/owasp_cornucopia_ecommerce_cards_en_1.21_static.idml
+            output/owasp_cornucopia_ecommerce_cards_en_1.30_dynamic.docx
+            output/owasp_cornucopia_ecommerce_cards_en_1.30_dynamic.idml
+            output/owasp_cornucopia_ecommerce_cards_en_1.30_dynamic.pdf
+            output/owasp_cornucopia_ecommerce_cards_en_1.30_static.docx
+            output/owasp_cornucopia_ecommerce_cards_en_1.30_static.idml
+            output/owasp_cornucopia_ecommerce_cards_en_1.30_static.pdf
+            output/owasp_cornucopia_ecommerce_cards_es_1.20_dynamic.docx
+            output/owasp_cornucopia_ecommerce_cards_es_1.20_dynamic.idml
+            output/owasp_cornucopia_ecommerce_cards_es_1.20_static.docx
+            output/owasp_cornucopia_ecommerce_cards_es_1.20_static.idml
+            output/owasp_cornucopia_ecommerce_cards_es_1.20_static.pdf
+            output/owasp_cornucopia_ecommerce_cards_fr_1.20_dynamic.docx
+            output/owasp_cornucopia_ecommerce_cards_fr_1.20_dynamic.idml
+            output/owasp_cornucopia_ecommerce_cards_fr_1.20_static.docx
+            output/owasp_cornucopia_ecommerce_cards_fr_1.20_static.idml
+            output/owasp_cornucopia_ecommerce_cards_fr_1.30_dynamic.docx
+            output/owasp_cornucopia_ecommerce_cards_fr_1.30_dynamic.idml
+            output/owasp_cornucopia_ecommerce_cards_fr_1.30_dynamic.pdf
+            output/owasp_cornucopia_ecommerce_cards_fr_1.30_static.docx
+            output/owasp_cornucopia_ecommerce_cards_fr_1.30_static.idml
+            output/owasp_cornucopia_ecommerce_cards_fr_1.30_static.pdf
+            output/owasp_cornucopia_ecommerce_cards_nl_1.21_dynamic.docx
+            output/owasp_cornucopia_ecommerce_cards_nl_1.21_dynamic.idml
+            output/owasp_cornucopia_ecommerce_cards_nl_1.21_static.docx
+            output/owasp_cornucopia_ecommerce_cards_nl_1.21_static.idml
+            output/owasp_cornucopia_ecommerce_cards_nl_1.30_dynamic.docx
+            output/owasp_cornucopia_ecommerce_cards_nl_1.30_dynamic.idml
+            output/owasp_cornucopia_ecommerce_cards_nl_1.30_dynamic.pdf
+            output/owasp_cornucopia_ecommerce_cards_nl_1.30_static.docx
+            output/owasp_cornucopia_ecommerce_cards_nl_1.30_static.idml
+            output/owasp_cornucopia_ecommerce_cards_nl_1.30_static.pdf
+            output/owasp_cornucopia_ecommerce_cards_no-nb_1.30_dynamic.docx
+            output/owasp_cornucopia_ecommerce_cards_no-nb_1.30_dynamic.idml
+            output/owasp_cornucopia_ecommerce_cards_no-nb_1.30_dynamic.pdf
+            output/owasp_cornucopia_ecommerce_cards_no-nb_1.30_static.docx
+            output/owasp_cornucopia_ecommerce_cards_no-nb_1.30_static.idml
+            output/owasp_cornucopia_ecommerce_cards_no-nb_1.30_static.pdf
+            output/owasp_cornucopia_ecommerce_cards_pt-br_1.20_dynamic.docx
+            output/owasp_cornucopia_ecommerce_cards_pt-br_1.20_dynamic.idml
+            output/owasp_cornucopia_ecommerce_cards_pt-br_1.20_static.docx
+            output/owasp_cornucopia_ecommerce_cards_pt-br_1.20_static.idml
+            output/owasp_cornucopia_ecommerce_cards_pt-br_1.30_dynamic.docx
+            output/owasp_cornucopia_ecommerce_cards_pt-br_1.30_dynamic.idml
+            output/owasp_cornucopia_ecommerce_cards_pt-br_1.30_dynamic.pdf
+            output/owasp_cornucopia_ecommerce_cards_pt-br_1.30_static.docx
+            output/owasp_cornucopia_ecommerce_cards_pt-br_1.30_static.idml
+            output/owasp_cornucopia_ecommerce_cards_pt-br_1.30_static.pdf
+  ignore2:
+    name: test
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    needs: runtests
+    if: false
+    steps:
       - uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3
         id: artifact-upload-step
         with:
@@ -128,7 +194,7 @@ jobs:
           compression-level: 0
           retention-days: 1
           overwrite: true
-      - name: Output artifact ID
+      - name: Append to release notes
         run: |
           echo 'Artifact URL is ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.artifact-upload-step.outputs.artifact-id }}'
           echo "ARTIFACT_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.artifact-upload-step.outputs.artifact-id }}" >> $GITHUB_ENV
@@ -137,12 +203,17 @@ jobs:
           PR_NUMBER: ${{ github.event.number }}
           PR_NOTES: |
             Build artifacts:
-            | Name | Link |
-            |-------------------------------------------------------|---------------------------------------------------------|
-            | owasp_cornucopia_ecommerce_cards_en_1.21_dynamic.docx | [owasp_cornucopia_ecommerce_cards_en_1.21_dynamic.docx](${{ env.ARTIFACT_URL }}) |
+            | Link |
+            |---------------------------------------------------------|
+            | [owasp_cornucopia_ecommerce_cards_en_1.21_dynamic.docx](${{ env.ARTIFACT_URL }}) |
         with:
           script: |
-            github.rest.issues.createComment({
+            const data = github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: process.env.PR_NOTES
+            })
+            github.rest.reactions.createForIssueComment({
               issue_number: process.env.PR_NUMBER,
               owner: context.repo.owner,
               repo: context.repo.repo,
