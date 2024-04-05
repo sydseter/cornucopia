@@ -3,13 +3,13 @@
     on:
       push:
         branches:
-          - "master"
+          - "stepsecurity_remediation_1712240465"
     permissions:
       contents: read
 
     jobs:
       pre-release:
-        name: "Pre Release"
+        name: "bogus release"
         permissions:
           contents: write
         runs-on: ubuntu-latest
