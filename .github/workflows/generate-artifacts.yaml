@@ -3,6 +3,7 @@ name: Generate output files
 on:
   workflow_run:
     workflows: [Run pull request tests]
+    types: [completed]
 permissions:
   contents: read
 
