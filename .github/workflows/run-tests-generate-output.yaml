@@ -114,18 +114,26 @@ jobs:
           git switch --orphan "$TARGET_BRANCH_NAME-artifacts"
       - name: Commit empty commit
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        env:
+          TARGET_BRANCH: ${{ steps.find-target.outputs.TARGET_BRANCH }}
         with:
           script: |
             const commit_msg = "Upload artifacts"
             const parent = "${{ env.parent}}";
             const object_tree = "${{ env.object_tree}}";
-            const response = await github.rest.git.createCommit({
+            const { data: commit } = await github.rest.git.createCommit({
               owner: context.repo.owner,
               repo: context.repo.repo,
               message: commit_msg,
               tree: object_tree,
               parents: [parent]
             });
+            await github.rest.git.updateRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: `heads/${TARGET_BRANCH}-artifacts`,
+              sha: commit.sha
+            })
       - name: Push commit to artifact target branch
         id: create-artifact-target-branch
         env:
