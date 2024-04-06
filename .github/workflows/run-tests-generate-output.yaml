@@ -113,11 +113,11 @@ jobs:
           echo "TARGET_BRANCH=$TARGET_BRANCH_NAME" >> "$GITHUB_OUTPUT"
           echo "parent=`git rev-parse HEAD`" >> "$GITHUB_ENV"
           echo "object_tree=`git write-tree`" >> "$GITHUB_ENV"
-          git switch --orphan "$TARGET_BRANCH_NAME-artifacts"
+          git switch --orphan "$BRANCH_NAME-artifacts"
       - name: Commit empty commit
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         env:
-          TARGET_BRANCH: ${{ steps.find-target.outputs.TARGET_BRANCH }}
+          TARGET_BRANCH: ${{ github.event.pull_request.head.ref }}
         with:
           script: |
             const { TARGET_BRANCH } = process.env
@@ -144,7 +144,7 @@ jobs:
       - name: Checkout target branch
         uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
         with:
-          ref: ${{ steps.find-target.outputs.TARGET_BRANCH }}
+          ref: ${{ github.event.pull_request.head.ref }}
       - run: git lfs fetch --all
       # Set the pip environment up
       - name: Get Python
@@ -165,7 +165,7 @@ jobs:
           commit: ${{ github.event.pull_request.head.sha }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           comment-message: "The generated Cornucopia cards in this pull request."
-          artifacts-branch: ${{ steps.find-target.outputs.TARGET_BRANCH }}-artifacts
+          artifacts-branch: ${{ github.event.pull_request.head.ref }}-artifacts
           artifacts: |
             output/owasp_cornucopia_ecommerce_cards_en_1.21_dynamic.docx
             output/owasp_cornucopia_ecommerce_cards_en_1.21_dynamic.idml
