@@ -132,7 +132,7 @@ jobs:
             const { data: ref } = await github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: `heads/${TARGET_BRANCH}-artifacts`,
+              ref: `refs/heads/${TARGET_BRANCH}-artifacts`,
               sha: commit.sha
             })
       - name: Push commit to artifact target branch
