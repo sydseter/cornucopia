@@ -129,12 +129,16 @@ jobs:
               tree: object_tree,
               parents: [parent]
             });
-            const { data: ref } = await github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: `refs/heads/${TARGET_BRANCH}-artifacts`,
-              sha: commit.sha
-            })
+            try {
+              const { data: ref } = await github.rest.git.createRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `refs/heads/${TARGET_BRANCH}-artifacts`,
+                sha: commit.sha
+              })
+            } catch (e) {
+              //The branch already exists
+            }
       - name: Checkout target branch
         uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
         with:
