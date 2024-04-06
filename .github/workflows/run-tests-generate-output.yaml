@@ -163,7 +163,7 @@ jobs:
           commit: ${{ github.event.pull_request.head.sha }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           comment-message: "The generated Cornucopia cards in this pull request."
-          artifacts-branch: ${{ steps.find-target.outputs.TARGET_BRANCH }}
+          artifacts-branch: ${{ steps.find-target.outputs.TARGET_BRANCH }}-artifacts
           artifacts: |
             output/owasp_cornucopia_ecommerce_cards_en_1.21_dynamic.docx
             output/owasp_cornucopia_ecommerce_cards_en_1.21_dynamic.idml
