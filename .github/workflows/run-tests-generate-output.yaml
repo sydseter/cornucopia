@@ -118,6 +118,7 @@ jobs:
           TARGET_BRANCH: ${{ steps.find-target.outputs.TARGET_BRANCH }}
         with:
           script: |
+            const { TARGET_BRANCH } = process.env
             const commit_msg = "Upload artifacts"
             const parent = "${{ env.parent}}";
             const object_tree = "${{ env.object_tree}}";
