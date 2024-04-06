@@ -102,12 +102,14 @@ jobs:
         env:
           PR_NUMBER: ${{ github.event.number }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH_NAME: ${{ github.event.pull_request.head.ref }}
         run: |
           sudo apt-get update && sudo apt-get install -y hub
           echo "Searching for pr branch for number $PR_NUMBER"
           echo "List all prs:"
           hub pr list -f "%I|%H|%n"
           TARGET_BRANCH_NAME=$(hub pr list -f "%I|%H|%n" | grep "$PR_NUMBER.*" | cut -d "|" -f2)
+          [ -z "$TARGET_BRANCH_NAME" ] && TARGET_BRANCH_NAME=$BRANCH_NAME
           echo "TARGET_BRANCH=$TARGET_BRANCH_NAME" >> "$GITHUB_OUTPUT"
           echo "parent=`git rev-parse HEAD`" >> "$GITHUB_ENV"
           echo "object_tree=`git write-tree`" >> "$GITHUB_ENV"
