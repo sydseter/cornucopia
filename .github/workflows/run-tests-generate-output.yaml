@@ -129,7 +129,7 @@ jobs:
               tree: object_tree,
               parents: [parent]
             });
-            await github.rest.git.updateRef({
+            const { data: ref } = await github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: `heads/${TARGET_BRANCH}-artifacts`,
