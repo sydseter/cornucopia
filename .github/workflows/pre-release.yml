@@ -48,6 +48,7 @@
             with:
               token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
               files: converter/coverage/cobertura.xml
+              total-parts-count: 3
           - name: Generate new output files
             run: |
               #
