@@ -46,6 +46,7 @@
             with:
               token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
               files: coverage.xml
+              total-parts-count: 3
           - name: Generate new output files
             run: |
               #
